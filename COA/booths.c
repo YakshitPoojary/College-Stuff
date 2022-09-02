@@ -77,9 +77,10 @@ void binary_addition(int b1,int b2)
         sum[i]=add;
         i++;
     }
-    if(carry==0)
+    if(carry!=0)
     {
         sum[i]=carry;
+        i++;
     }
 
     printf("\nSum is: ");
