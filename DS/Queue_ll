@@ -63,6 +63,7 @@ void dequeue(struct queue* q)
 int main()
 {
     struct queue* q = create();
+    struct node* temp = (struct node*)malloc(sizeof(struct node));
     int choice,val;
     int i=0;
     while(i==0)
@@ -81,12 +82,14 @@ int main()
                 dequeue(q);
                 break;
             case 3:
-                while(q -> rear ->next!=NULL)
+                temp = q->front;
+                while(temp !=NULL)
                 {
-                    
+                    printf("%d\n", temp -> data );
+                    temp=temp->next;
                 }
-                printf("\nQueue Front : %d \n", q->front->data);
-                printf("Queue Rear : %d \n", q->rear->data);
+                //printf("\nQueue Front : %d \n", q->front->data);
+                //printf("Queue Rear : %d \n", q->rear->data);
                 break;
             case 4:
                 i=1;
