@@ -4,6 +4,7 @@
 struct node 
 {
     int data;
+    int pri;
     struct node* next;
 };
 
@@ -15,7 +16,9 @@ struct queue
 struct node* newnode(int val)
 {
     struct node* temp = (struct node*)malloc(sizeof(struct node));
+    int priority;
     temp->data = val;
+    temp->pri = priority;
     temp->next = NULL;
     return temp;
 }
@@ -27,12 +30,12 @@ struct queue* create()
     return q;
 }
  
-void enqueue(struct queue* q, int val)
+void enqueue(struct queue* q, int val,int priority)
 {
 
     struct node* temp = newnode(val);
-
-    if (q->rear == NULL) 
+    struct node *ptr=h
+    if (q->front == NULL) 
     {
         q->front = q->rear = temp;
         return;
@@ -40,6 +43,8 @@ void enqueue(struct queue* q, int val)
     
     q->rear->next = temp;
     q->rear = temp;
+    
+    
 }
  
 // Function to remove a key from given queue q
@@ -49,8 +54,9 @@ void dequeue(struct queue* q)
     {
         printf("No elements in queue");
     }
-
+    
     struct node* temp = q->front;
+    printf("The element %d is deleted",q->front->data);
     q->front = q->front->next;
     
     if (q->front == NULL)
@@ -64,11 +70,11 @@ int main()
 {
     struct queue* q = create();
     struct node* temp = (struct node*)malloc(sizeof(struct node));
-    int choice,val;
+    int choice,val,priority;
     int i=0;
     while(i==0)
     {
-        printf("\n1) Enqueue\n2) Dequeue\n3) Display\n4) Exit\n");
+        printf("\n\n1) Enqueue\n2) Dequeue\n3) Display\n4) Exit\n\n");
         scanf("%d",&choice);
         
         switch(choice)
@@ -76,17 +82,26 @@ int main()
             case 1:
                 printf("\nEnter value to enqueue: ");
                 scanf("%d",&val);
-                enqueue(q,val);
+                printf("\nEnter priority: ");
+                scanf("%d",&priority);
+                enqueue(q,val,priority);
                 break;
             case 2:
                 dequeue(q);
                 break;
             case 3:
                 temp = q->front;
-                while(temp !=NULL)
+                if(q->front==NULL)
                 {
-                    printf("%d\n", temp -> data );
-                    temp=temp->next;
+                    printf("No elements in this queue");
+                }
+                else
+                {
+                    while(temp !=NULL)
+                    {
+                        printf("%d\n", temp -> data );
+                        temp=temp->next;
+                    }
                 }
                 //printf("\nQueue Front : %d \n", q->front->data);
                 //printf("Queue Rear : %d \n", q->rear->data);
