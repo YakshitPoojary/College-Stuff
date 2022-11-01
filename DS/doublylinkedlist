@@ -1,0 +1,150 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node 
+{
+    int data;
+    struct node* prev;
+    struct node* next;
+};
+
+void traverse(struct node* ptr)
+{
+    if(ptr==NULL)
+    {
+        printf("No elements in linked list");
+    }
+    else
+    {
+        while(ptr!=NULL)
+        {
+            printf("%d\n",ptr->data);
+            ptr=ptr->next;
+        }
+    }
+}
+
+void travreverse(struct node* ptr,struct node* head)
+{
+    if(ptr==NULL)
+    {
+        printf("No elements in linked list\n");
+    }
+    else
+    {
+        while(ptr->next!=NULL)
+        {
+            ptr=ptr->next;
+        }
+        while(ptr!=head)
+        {
+            printf("%d\n",ptr->data);
+            ptr=ptr->prev;
+        }
+        printf("%d\n",head->data);
+    }
+}
+
+struct node* addbeg(struct node* head,int val)
+{
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    newnode -> data = val;
+    newnode -> next = head;
+    return newnode;
+}
+
+struct node* addbefore(struct node* head,int val,int key)
+{
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    struct node* ptr = head;
+    newnode -> data = val;
+    newnode -> next = NULL;
+    newnode -> prev = NULL;
+    
+    if(head==NULL)
+    {
+        head -> data = newnode -> data;
+    }
+    else
+    {
+       while(ptr -> data != key)
+       {
+           ptr = ptr -> next;
+       }
+       newnode -> prev = ptr -> prev;
+       newnode -> next = ptr;
+       ptr -> prev -> next = newnode;
+       ptr -> prev = newnode;
+    }
+    return head;
+}
+
+struct node* addafter(struct node* head,int val,int key)
+{
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    struct node* ptr = head;
+    newnode -> data = val;
+    newnode -> next = NULL;
+    newnode -> prev = NULL;
+    
+    if(head==NULL)
+    {
+        head -> data = newnode -> data;
+    }
+    else
+    {
+       while(ptr -> data != key)
+       {
+           ptr = ptr -> next;
+       }
+       newnode -> prev = ptr;
+       newnode -> next = ptr -> next;
+       ptr -> next -> prev = newnode;
+       ptr -> next = newnode;
+    }
+    return head;
+}
+
+int main()
+{
+    struct node* head = (struct node*)malloc(sizeof(struct node));
+    head=NULL;
+    int val,key,choice;
+    
+    int i=0;
+    while(i==0)
+    {
+        printf("\n\n1)Traverse \n2)Traverse Reverse \n3)Add at beginning\n4)Add a node after key \n5)Add a node before key \n\nEnter your choice: ");
+        scanf("%d",&choice);
+        
+        switch(choice)
+        {
+            case 1:
+                traverse(head);
+                break;
+            case 2:
+                travreverse(head,head);
+                break;
+            case 3: 
+                printf("Enter data to add to linked list: ");
+                scanf("%d",&val);
+                head=addbeg(head,val);
+                break;
+            case 4:
+                printf("Enter data to add to linked list: ");
+                scanf("%d",&val);
+                printf("After which node: ");
+                scanf("%d",&key);
+                head = addafter(head,val,key);
+                break;
+            case 5:
+                printf("Enter data to add to linked list: ");
+                scanf("%d",&val);
+                printf("Before which node: ");
+                scanf("%d",&key);
+                head=addbefore(head,val,key);
+                break;
+        }
+    }
+}
+
