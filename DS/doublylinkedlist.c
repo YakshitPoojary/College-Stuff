@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 struct node 
 {
     int data;
@@ -11,7 +12,7 @@ void traverse(struct node* ptr)
 {
     if(ptr==NULL)
     {
-        printf("No elements in linked list");
+        printf("No elements in linked list\n\n");
     }
     else
     {
@@ -28,7 +29,7 @@ void travreverse(struct node* ptr,struct node* head)
 {
     if(ptr==NULL)
     {
-        printf("No elements in linked list\n");
+        printf("\nNo elements in linked list\n");
     }
     else
     {
@@ -139,7 +140,7 @@ struct node* delete(struct node* head,int val)
     struct node* temp = (struct node*)malloc(sizeof(struct node));
     if(head==NULL)
     {
-        printf("There isn't a single node in this linked list!");
+        printf("\nThere isn't a single node in this linked list!\n");
     }
     else
     {
@@ -152,7 +153,7 @@ struct node* delete(struct node* head,int val)
         {
             return(ptr->next);
         }
-        elsif(ptr->next==NULL)
+        else if(ptr->next==NULL)
         {
             ptr->prev->next=NULL;
         }
@@ -166,10 +167,9 @@ int main()
     head=NULL;
     int val,key,choice;
     
-    int i=0;
-    while(i==0)
+    do
     {
-        printf("\n1)Traverse \n2)Traverse Reverse \n3)Add at beginning\n4)Add a node after key \n5)Add a node before key \n6)Add at end \n7)Delete a node 8)Exit\n\nEnter your choice: ");
+        printf("\n1)Traverse \n2)Traverse Reverse \n3)Add at beginning\n4)Add a node after key \n5)Add a node before key \n6)Add at end \n7)Delete a node \n8)Exit\n\nEnter your choice: ");
         scanf("%d",&choice);
         
         switch(choice)
@@ -177,14 +177,18 @@ int main()
             case 1:
                 traverse(head);
                 break;
+
+
             case 2:
                 travreverse(head,head);
                 break;
+
             case 3: 
                 printf("Enter data to add to linked list: ");
                 scanf("%d",&val);
                 head=addbeg(head,val);
                 break;
+
             case 4:
                 printf("Enter data to add to linked list: ");
                 scanf("%d",&val);
@@ -192,6 +196,7 @@ int main()
                 scanf("%d",&key);
                 head = addafter(head,val,key);
                 break;
+
             case 5:
                 printf("Enter data to add to linked list: ");
                 scanf("%d",&val);
@@ -199,23 +204,23 @@ int main()
                 scanf("%d",&key);
                 head=addbefore(head,val,key);
                 break;
+
             case 6:
                 printf("Enter data to add to linked list: ");
                 scanf("%d",&val);
                 head=addend(head,val);
                 break;
+
             case 7:
                 printf("Enter data to delete from linked list: ");
                 scanf("%d",&val);
                 head=delete(head,val);
                 break;
-            case 8:
-                i=1;
-                break;
+                
             default:
-                printf("Incorrect choice: ");
+                printf("Incorrect choice \n\n");
                 break;
         }
-    }
+    }while(choice!=8);
     return 0;
 }
