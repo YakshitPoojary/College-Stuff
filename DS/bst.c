@@ -121,6 +121,26 @@ void inorder (struct node* ptr)
     }
 }
 
+void preorder (struct node* ptr)
+{
+    if(ptr)
+    {
+        printf("%d ",ptr->data);
+        inorder(ptr->left);
+        inorder(ptr->right);
+    }
+}
+
+void postorder (struct node* ptr)
+{
+    if(ptr)
+    {
+        inorder(ptr->left);
+        inorder(ptr->right);
+        printf("%d ",ptr->data);
+    }
+}
+
 int main() {
     struct node* root = (struct node*)malloc(sizeof(struct node));
     root = NULL;
