@@ -71,6 +71,12 @@ struct node* delete(struct node* root,int num)
                 ptr = ptr -> right;
             }
         }
+
+        if(ptr -> data != num)
+        {
+            printf("This node doesnt exist");
+        }
+
         if(ptr -> left == NULL && ptr -> right != NULL )
         {
             if(ptr == prev -> left)
@@ -107,6 +113,10 @@ struct node* delete(struct node* root,int num)
             }
             free(ptr);
         }
+        else
+        {
+            printf("This node has both the left and right child");
+        }
     }
     return root;
 }
@@ -116,7 +126,7 @@ void inorder (struct node* ptr)
     if(ptr)
     {
         inorder(ptr->left);
-        printf("%d ",ptr->data);
+        printf("%d\n",ptr->data);
         inorder(ptr->right);
     }
 }
@@ -125,9 +135,9 @@ void preorder (struct node* ptr)
 {
     if(ptr)
     {
-        printf("%d ",ptr->data);
-        inorder(ptr->left);
-        inorder(ptr->right);
+        printf("%d\n",ptr->data);
+        preorder(ptr->left);
+        preorder(ptr->right);
     }
 }
 
@@ -135,25 +145,89 @@ void postorder (struct node* ptr)
 {
     if(ptr)
     {
-        inorder(ptr->left);
-        inorder(ptr->right);
-        printf("%d ",ptr->data);
+        postorder(ptr->left);
+        postorder(ptr->right);
+        printf("%d\n",ptr->data);
     }
 }
 
-int main() {
+int left_height(struct node * ptr)
+{
+    int ht = 0;
+    while (ptr) 
+    {
+        ht++;
+        ptr = ptr->left;
+    }
+ 
+    return ht;
+}
+
+int right_height(struct node * ptr)
+{
+    int ht = 0;
+    while (ptr) 
+    {
+        ht++;
+        ptr = ptr->right;
+    }
+ 
+    return ht;
+}
+
+int countnodes(struct node* root)
+{
+    if(root == NULL)
+    {
+        return 0;
+    }
+    int lh = left_height(root);
+    int rh = right_height(root);
+    return 1 + countnodes(root->left) + countnodes(root -> right);
+    
+}
+
+int main() 
+{
     struct node* root = (struct node*)malloc(sizeof(struct node));
     root = NULL;
-    int num;
-    root = insert(root,1);
-    root = insert(root,2);
-    root = insert(root,0);
-    root = insert(root,-1);
-    root = insert(root,6);
-    root = insert(root,7);
-    root = insert(root,3);
-    root = insert(root,4);
-    root = delete(root,3);
+    int num,n;
+
+    printf("Enter number of nodes: ");
+    scanf("%d",&n);
+
+    for(int i = 0; i<n;i++)
+    {
+        printf("Enter integer data: ");
+        scanf("%d", &num);
+        root = insert(root,num);
+    }
+    
+
+    printf("\n\nInorder traversal: \n");
     inorder(root);
+    
+    printf("\n\nPreorder traversal: \n");
+    preorder(root);
+
+    printf("\n\nPostorder traversal: \n");
+    postorder(root);
+
+    /*printf("Enter data of node to be deleted: ");
+    scanf("%d",&num);
+    delete(root,num);
+
+    printf("\n\nInorder traversal: \n");
+    inorder(root);
+    
+    printf("\n\nPreorder traversal: \n");
+    preorder(root);
+
+    printf("\n\nPostorder traversal: \n");
+    postorder(root);*/
+
+    int nodes = countnodes(root);
+    printf("This tree has %d nodes.",nodes);
     return 0;
 }
+
