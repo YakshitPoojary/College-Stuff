@@ -12,7 +12,7 @@ void traverse(struct node* ptr)
 {
     if(ptr==NULL)
     {
-        printf("No elements in linked list\n\n");
+        printf("\nNo elements in linked list\n");
     }
     else
     {
@@ -64,26 +64,33 @@ struct node* addbefore(struct node* head,int val,int key)
     
     if(head==NULL)
     {
-        head -> data = newnode -> data;
+        head = newnode;
     }
     else
     {
-       while(ptr -> data != key)
+       while(ptr -> data != key && ptr != NULL)
        {
            ptr = ptr -> next;
        }
-       newnode -> prev = ptr -> prev;
-       newnode -> next = ptr;
-       if (ptr!=head)
+
+       if(ptr != NULL)
        {
-        ptr -> prev -> next = newnode;
-       }
-       ptr -> prev = newnode;
-       if(ptr==head)
-       {
-         return newnode;
+            newnode -> prev = ptr -> prev;
+            newnode -> next = ptr;
+            if (ptr != head)
+            {
+                ptr -> prev -> next = newnode;
+                ptr -> prev = newnode;
+            }
+            else
+            {
+                ptr -> prev = newnode;
+                newnode -> next = ptr;
+                head = newnode;
+            }
        }
     }
+
     return head;
 }
 
@@ -92,24 +99,35 @@ struct node* addafter(struct node* head,int val,int key)
     struct node* newnode = (struct node*)malloc(sizeof(struct node));
     struct node* ptr = head;
     newnode -> data = val;
+    newnode -> next = NULL;
+    newnode -> prev = NULL;
     
     if(head==NULL)
     {
-        head -> data = newnode -> data;
+        head = newnode;
     }
     else
     {
-       while(ptr -> data != key)
+       while(ptr -> data != key && ptr != NULL)
        {
            ptr = ptr -> next;
        }
-       newnode -> prev = ptr;
-       newnode -> next = ptr -> next;
-       if (ptr->next!=NULL)
+
+       if(ptr != NULL)
        {
-        ptr -> next -> prev = newnode;
+            newnode -> prev = ptr;
+            newnode -> next = ptr -> next;
+
+            if (ptr->next!=NULL)
+            {
+                    ptr -> next -> prev = newnode;
+                    ptr -> next = newnode;
+            }
+            else
+            {
+                    ptr -> next = newnode;            
+            }
        }
-       ptr -> next = newnode;
     }
     return head;
 }
@@ -119,6 +137,9 @@ struct node* addend(struct node* head,int val)
     struct node* newnode = (struct node*)malloc(sizeof(struct node));
     struct node* ptr = head;
     newnode -> data = val;
+    newnode -> next = NULL;
+    newnode -> prev = NULL;
+    
     if(head==NULL)
     {
         return newnode;
@@ -145,20 +166,28 @@ struct node* delete(struct node* head,int val)
     else
     {
         struct node* ptr = head;
-        while(ptr->data==val)
+        while(ptr->data!=val && ptr != NULL)
         {
             ptr = ptr -> next;
         }
+
         if(ptr==head)
         {
-            return(ptr->next);
+            head = ptr -> next;
+            free(ptr);
         }
         else if(ptr->next==NULL)
         {
-            ptr->prev->next=NULL;
+            free(ptr);
         }
-        
+        else
+        {
+            ptr -> prev -> next = ptr -> next;
+            ptr -> next -> prev = ptr -> prev;
+            free(ptr);
+        }
     }
+    return head;
 }
 
 int main()
@@ -177,7 +206,6 @@ int main()
             case 1:
                 traverse(head);
                 break;
-
 
             case 2:
                 travreverse(head,head);
@@ -202,7 +230,7 @@ int main()
                 scanf("%d",&val);
                 printf("Before which node: ");
                 scanf("%d",&key);
-                head=addbefore(head,val,key);
+                head = addbefore(head,val,key);
                 break;
 
             case 6:
