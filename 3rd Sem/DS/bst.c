@@ -151,42 +151,6 @@ void postorder (struct node* ptr)
     }
 }
 
-int left_height(struct node * ptr)
-{
-    int ht = 0;
-    while (ptr) 
-    {
-        ht++;
-        ptr = ptr->left;
-    }
- 
-    return ht;
-}
-
-int right_height(struct node * ptr)
-{
-    int ht = 0;
-    while (ptr) 
-    {
-        ht++;
-        ptr = ptr->right;
-    }
- 
-    return ht;
-}
-
-int countnodes(struct node* root)
-{
-    if(root == NULL)
-    {
-        return 0;
-    }
-    int lh = left_height(root);
-    int rh = right_height(root);
-    return 1 + countnodes(root->left) + countnodes(root -> right);
-    
-}
-
 int main() 
 {
     struct node* root = (struct node*)malloc(sizeof(struct node));
@@ -213,7 +177,7 @@ int main()
     printf("\n\nPostorder traversal: \n");
     postorder(root);
 
-    /*printf("Enter data of node to be deleted: ");
+    printf("Enter data of node to be deleted: ");
     scanf("%d",&num);
     delete(root,num);
 
@@ -224,10 +188,7 @@ int main()
     preorder(root);
 
     printf("\n\nPostorder traversal: \n");
-    postorder(root);*/
-
-    int nodes = countnodes(root);
-    printf("This tree has %d nodes.",nodes);
+    postorder(root);
     return 0;
 }
 
