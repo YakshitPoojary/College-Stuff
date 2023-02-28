@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void interchange(int a[], int i, int j)
 {
@@ -18,18 +19,18 @@ int partition(int a[], int s, int e)
     do
     {
       i++;
-    }while(pivot<=a[i]);
+    }while(pivot>=a[i]);
     
     do
     {
       j--;
-    }while(pivot>=a[j]);
+    }while(pivot<=a[j]);
 
     if(i<j)
     {
       interchange(a,i,j);
     }
-  }while(i>=j);
+  }while(i<=j);
 
   a[s] = a[j];
   a[j] = pivot;
@@ -53,6 +54,18 @@ int main()
   int a[7]={25,12,13,5,70,23,10};
   int s=0,e=n-1;
 
+  printf("Array Before Quicksort: ");
+  for(int i=0;i<n;i++)
+  {
+    printf("%d ",a[i]);
+  }
+  printf("\n\n");
+
   quicksort(a,s,e);
 
+  printf("Array After Quicksort: ");
+  for(int i=0;i<n;i++)
+  {
+    printf("%d ",a[i]);
+  }
 }
