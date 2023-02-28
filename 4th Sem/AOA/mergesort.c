@@ -76,3 +76,11 @@ int main()
     }
     printf("\n\n");
 }
+
+    printf("Array After Quicksort: ");
+    for(int i=0;i<n;i++)
+    {
+        printf("%d ",a[i]);
+    }
+    printf("\n\n");
+}
