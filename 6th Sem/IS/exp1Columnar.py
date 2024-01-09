@@ -51,8 +51,6 @@ def decrypt(keysize, ciphertext):
 
     return plaintext.rstrip()
 
-
-
 key = str(input("Enter Key: "))
 plaintext = str(input("Enter Plaintext to be encrypted: "))
 print("Your Plaintext was: " + "'"+plaintext+"'")
