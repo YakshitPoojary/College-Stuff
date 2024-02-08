@@ -1,19 +1,35 @@
 #include <stdio.h>
-#include <conio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
-void main(){
+int main() {
     char *ptr;
     char *dptr;
-    // clrscr();
-    ptr = (char*)malloc(10*sizeof(char));
-    dptr = (char*)malloc(10*sizeof(char));
 
-    printf("Address of ptr: %d\n",ptr);
-    printf("Address of dptr: %d\n",dptr);
-    printf("\n\nEnter the String: \n");
-    gets(ptr);
+    ptr = (char*)malloc(10 * sizeof(char));
+    dptr = (char*)malloc(10 * sizeof(char));
 
-    system(dptr);
+    if (ptr == NULL || dptr == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return 1;
+    }
+
+    printf("Address of ptr: %p\n", (void*)ptr);
+    printf("Address of dptr: %p\n", (void*)dptr);
+
+    printf("\nEnter the String: \n");
+
+    if (fgets(ptr, 10, stdin) == NULL) {
+        fprintf(stderr, "Error reading input\n");
+        free(ptr);
+        free(dptr);
+        return 1;
+    }
+
+    printf("String entered: %s\n", ptr);
+
+    free(ptr);
+    free(dptr);
+
+    return 0;
 }
